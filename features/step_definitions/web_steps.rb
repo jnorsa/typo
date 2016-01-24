@@ -33,7 +33,7 @@ World(WithinHelpers)
 
 Given /^the blog is set up$/ do
   Blog.default.update_attributes!({:blog_name => 'Teh Blag',
-                                   :base_url => 'http://localhost:3000'});
+                                   :base_url => 'https://coursera-jnorsa.c9.io/'});
   Blog.default.save!
   User.create!({:login => 'admin',
                 :password => 'aaaaaaaa',
