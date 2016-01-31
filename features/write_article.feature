@@ -18,15 +18,3 @@ Feature: Write Articles
     When I follow "Foobar"
     Then I should see "Lorem Ipsum"
     
-  Scenario: Display Category
-    Given I am on the admin page
-    When I follow "Categories" 
-    Then I should be on the admin category page  
-
-  Scenario: Display Category
-    Given I am on the admin category page  
-    When I fill in "category[name]" with "Test Category"
-    And I press "Save"
-    Then I should be on the admin category page
-    And I should see "Test Category"
-    And I should see "Category was successfully saved."
