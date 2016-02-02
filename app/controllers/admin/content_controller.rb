@@ -88,9 +88,12 @@ class Admin::ContentController < Admin::BaseController
 
     if session[:mergeID].nil? then
     
+      debugger
       @article2 = Article.find(params[:mergeID])
       @article = Article.find(params[:id])
-      @article.body = @article.body + @article2.body
+      if !@article2.body.nil? then
+        @article.body = @article.body + @article2.body
+      end
       @article.save!
       @article2.comments.each do |comment|
         comment.article_id = @article.id
