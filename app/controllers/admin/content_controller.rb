@@ -74,6 +74,26 @@ class Admin::ContentController < Admin::BaseController
       page.visual_effect(:toggle_appear, "attachment_#{params[:id]}")
     end
   end
+  
+  def merge
+
+    if session[:id2].nil? then
+    
+      @article2 = Article.find(params[:id2])
+      @article = Article.find(params[:id])
+      @article.body = @article.body + @article2.body
+      @article.save!
+            debugger
+      @article2.comments.each do |comment|
+        comment.article_id = @article.id
+        comment.save!
+      end
+      #@article2.delete
+      flash[:notice] = _("This article was merged successfully")
+
+        redirect_to :action => 'index'
+    end
+  end
 
   def attachment_save(attachment)
     begin
@@ -140,6 +160,7 @@ class Admin::ContentController < Admin::BaseController
   def real_action_for(action); { 'add' => :<<, 'remove' => :delete}[action]; end
 
   def new_or_edit
+    debugger
     id = params[:id]
     id = params[:article][:id] if params[:article] && params[:article][:id]
     @article = Article.get_or_build_article(id)
