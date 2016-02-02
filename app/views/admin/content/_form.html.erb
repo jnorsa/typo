@@ -151,11 +151,11 @@
   <% if User.find_by_id(session[:user_id]).admin? %>
     <div class='separator'>  
       <h4><%= _("Merge Articles") %></h4>
-      <div class='class'>
-         <%= _("Article ID:") %>  <%= text_field 'merge', 'id' %>
-         <input id='mergeArticle' type="submit" value="<%= _('Merge') %>" name="merge" class='btn info' />
-      </div>
-    </div>
+
+      <%= form_tag("/admin/content/merge/#{@article.id}") do %>
+     Article ID: <%= text_field_tag 'mergeID' %>
+     <%= submit_tag 'Merge' %>
+ <% end %>
   <% end %>
   
   </div>

@@ -24,7 +24,12 @@ class Admin::ContentController < Admin::BaseController
   end
 
   def new
-    new_or_edit
+    if params[:mergeID].nil?||params[:mergeID]=="" then
+      new_or_edit
+    else
+      merge
+    end
+
   end
 
   def edit
@@ -34,7 +39,11 @@ class Admin::ContentController < Admin::BaseController
       flash[:error] = _("Error, you are not allowed to perform this action")
       return
     end
-    new_or_edit
+    if params[:mergeID].nil?||params[:mergeID]=="" then
+      new_or_edit
+    else
+      merge
+    end
   end
 
   def destroy
@@ -77,13 +86,12 @@ class Admin::ContentController < Admin::BaseController
   
   def merge
 
-    if session[:id2].nil? then
+    if session[:mergeID].nil? then
     
-      @article2 = Article.find(params[:id2])
+      @article2 = Article.find(params[:mergeID])
       @article = Article.find(params[:id])
       @article.body = @article.body + @article2.body
       @article.save!
-            debugger
       @article2.comments.each do |comment|
         comment.article_id = @article.id
         comment.save!
@@ -160,7 +168,6 @@ class Admin::ContentController < Admin::BaseController
   def real_action_for(action); { 'add' => :<<, 'remove' => :delete}[action]; end
 
   def new_or_edit
-    debugger
     id = params[:id]
     id = params[:article][:id] if params[:article] && params[:article][:id]
     @article = Article.get_or_build_article(id)
