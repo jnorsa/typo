@@ -96,7 +96,7 @@ class Admin::ContentController < Admin::BaseController
         comment.article_id = @article.id
         comment.save!
       end
-      #@article2.delete
+      @article2.delete
       flash[:notice] = _("This article was merged successfully")
 
         redirect_to :action => 'index'
