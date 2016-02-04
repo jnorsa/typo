@@ -121,6 +121,21 @@ class Article < Content
     end
 
   end
+  
+    def merge_with(other_article_id)
+    other_article = Article.find_by_id(other_article_id)
+    if not self.id or not other_article.id
+      return false
+    end
+    if !other_article.body.nil? then
+      self.body = self.body + "\n\n" + other_article.body
+    end
+    self.comments << other_article.comments
+    self.save!
+    other_article = Article.find_by_id(other_article_id)
+    other_article.destroy
+    return true
+  end
 
   def year_url
     published_at.year.to_s
@@ -450,20 +465,7 @@ class Article < Content
     true
   end
   
-  def merge_with(other_article_id)
-    other_article = Article.find_by_id(other_article_id)
-    if not self.id or not other_article.id
-      return false
-    end
-    if !other_article.body.nil? then
-      self.body = self.body + "\n\n" + other_article.body
-    end
-    self.comments << other_article.comments
-    self.save!
-    other_article = Article.find_by_id(other_article_id)
-    other_article.destroy
-    return true
-  end
+
 
   def add_notifications
     users = interested_users
