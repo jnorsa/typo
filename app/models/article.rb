@@ -455,7 +455,9 @@ class Article < Content
     if not self.id or not other_article.id
       return false
     end
-    self.body = self.body + "\n\n" + other_article.body
+    if !other_article.body.nil? then
+      self.body = self.body + "\n\n" + other_article.body
+    end
     self.comments << other_article.comments
     self.save!
     other_article = Article.find_by_id(other_article_id)
