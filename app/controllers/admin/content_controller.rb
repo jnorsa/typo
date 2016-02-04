@@ -24,12 +24,7 @@ class Admin::ContentController < Admin::BaseController
   end
 
   def new
-    if params[:mergeID].nil?||params[:mergeID]=="" then
       new_or_edit
-    else
-      merge
-    end
-
   end
 
   def edit
@@ -39,11 +34,7 @@ class Admin::ContentController < Admin::BaseController
       flash[:error] = _("Error, you are not allowed to perform this action")
       return
     end
-    if params[:mergeID].nil?||params[:mergeID]=="" then
-      new_or_edit
-    else
-      merge
-    end
+    new_or_edit
   end
 
   def destroy
@@ -84,27 +75,42 @@ class Admin::ContentController < Admin::BaseController
     end
   end
   
-  def merge
+ # def merge
+#
+ #   if session[:mergeID].nil? then
+  #  
+   #   @article2 = Article.find(params[:mergeID])
+    #  @article = Article.find(params[:id])
+  #    if !@article2.body.nil? then
+  #      @article.body = @article.body + @article2.body
+  #    end
+  #    @article.save!
+  #    @article2.comments.each do |comment|
+  #      comment.article_id = @article.id
+  #      comment.save!
+  #    end
+  #    @article2.delete
+  #    flash[:notice] = _("This article was merged successfully")#
+#
+#        redirect_to :action => 'index'
+#    end
+#  end
 
-    if session[:mergeID].nil? then
-    
-      debugger
-      @article2 = Article.find(params[:mergeID])
-      @article = Article.find(params[:id])
-      if !@article2.body.nil? then
-        @article.body = @article.body + @article2.body
-      end
-      @article.save!
-      @article2.comments.each do |comment|
-        comment.article_id = @article.id
-        comment.save!
-      end
-      @article2.delete
-      flash[:notice] = _("This article was merged successfully")
-
-        redirect_to :action => 'index'
+def merge_with
+#    unless Profile.find(current_user.profile_id).label == "admin"
+#      flash[:error] = _("You are not allowed to perform a merge action")
+#       redirect_to :action => index
+#    end
+    article = Article.find_by_id(params[:id])
+    if article.merge_with(params[:merge_with])
+      flash[:notice] = _("Articles successfully merged!")
+      redirect_to :action => :index
+    else
+      flash[:notice] = _("Articles couldn't be merged")
+      redirect_to :action => :edit, :id => params[:id]
     end
-  end
+end
+
 
   def attachment_save(attachment)
     begin

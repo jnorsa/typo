@@ -35,22 +35,7 @@ Given /^the blog is set up$/ do
   Blog.default.update_attributes!({:blog_name => 'Teh Blag',
                                    :base_url => 'https://coursera-jnorsa.c9.io/'});
   Blog.default.save!
-  Article.create!({:allow_comments => true, 
-                :allow_pings => true, 
-                :author => "Mr Typo", 
-                :body => "Welcome to Typo. This is your first article. Edit or delete it, then start blogging!", 
-                :guid => "1bf3e2ca-ed7b-4562-8a4a-8ce8438822c8", 
-                :id => 1, 
-                :permalink => "hello-world", 
-                :post_type => "read", 
-                :published => true, 
-                :published_at => "2012-06-09 21:51:55 UTC", 
-                :settings => {"password"=>""}, 
-                :state => "published", 
-                :text_filter_id => 5, 
-                :title => "Hello World!", 
-                :type => "Article", 
-                :user_id => 1})
+ 
   User.create!({:login => 'admin',
                 :password => 'aaaaaaaa',
                 :email => 'joe@snow.com',
@@ -63,6 +48,7 @@ Given /^the blog is set up$/ do
                 :profile_id => 2,
                 :name => 'publisher',
                 :state => 'active'})
+
 end
 
 And /^I am logged into the admin panel$/ do

@@ -18,7 +18,7 @@ Feature: Edit Category
     Given the blog is set up
     And I am logged into the admin panel
     And I am on the new article page
-    When I fill in "merge[id]" with "1"
+    When I fill in "mergeID" with "1"
     And I fill in "article_title" with "Foobar"
     And I fill in "article__body_and_extended_editor" with "Lorem Ipsum"
     And I press "Merge"
@@ -29,7 +29,7 @@ Feature: Edit Category
     Given the blog is set up
     And I am logged into the admin panel
     And I am on the new article page
-    When I fill in "merge[id]" with "1"
+    When I fill in "mergeID" with "1"
     And I fill in "article_title" with "Foobar"
     And I fill in "article__body_and_extended_editor" with "Lorem Ipsum"
     And I press "Merge"

@@ -449,6 +449,19 @@ class Article < Content
 
     true
   end
+  
+  def merge_with(other_article_id)
+    other_article = Article.find_by_id(other_article_id)
+    if not self.id or not other_article.id
+      return false
+    end
+    self.body = self.body + "\n\n" + other_article.body
+    self.comments << other_article.comments
+    self.save!
+    other_article = Article.find_by_id(other_article_id)
+    other_article.destroy
+    return true
+  end
 
   def add_notifications
     users = interested_users
